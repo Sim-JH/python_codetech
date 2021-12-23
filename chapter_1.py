@@ -89,7 +89,7 @@ def use_assignment():
 
 
 def use_zip():
-    # 여러 이터레이터에 대해 나란히 루프를 수행하려면 zip을 사한다
+    # 여러 이터레이터에 대해 나란히 루프를 수행하려면 zip을 사용한다
     names = ['Cecilia', '남궁민수', '毛泽东']
     counts = [len(n) for n in names]
     max_count = 0
