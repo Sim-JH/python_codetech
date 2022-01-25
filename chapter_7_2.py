@@ -202,8 +202,6 @@ async def main_async():
     for number, outcome in results:
         print(f'클라이언트: {number}는 {outcome}')
 
-asyncio.run(main_async())
-
 # ======================================================================================================================
 # 스레드를 사용한 I/O를 어떻게 asynico로 포팅할 수 있는지 알아둬라
 # 파이썬은 for 루프, with 문, 제너레이터, 컴프리헨션의 비동기 버전을 제공하고, 코루틴 안에서 기존 라이브러리 도우미 함수를 대신해 즉시 사용할 수 있는 대안을 제공한다.
@@ -215,9 +213,6 @@ asyncio.run(main_async())
 
 # 아런 유형의 클라이언트/서버 시스템을 구축하는 가장 일반적인 방법은 블로컹 I/O와 스레드를 사용하는 것이다.
 # 그러려면 메세지 송수신을 처리하는 도우미 클래스가 필요하다. 이 경우 서버가 보내거나 받는 메세지 한 줄 한 줄은 처리할 명령을 표현한다.
-# class EOFError(Exception):
-#     pass
-
 class ConnectionBase:
     def __init__(self, connection):
         self.connection = connection
@@ -237,14 +232,6 @@ class ConnectionBase:
 # 서버는 한 번에 하나씩 연결을 처리하고 클라이언트의 세션 상태를 유지하는 클래스로 구현된다.
 import random
 
-# WARMER = '더따뜻함'
-# COLDER = '더차가움'
-# UNSURE = '잘모르겠음'
-# CORRECT = '맞음'
-#
-# class UnknownCommandError(Exception):
-#     pass
-
 class Session(ConnectionBase):
     def __init__(self, *args):
         super().__init__(*args)
@@ -255,7 +242,7 @@ class Session(ConnectionBase):
         self.upper = upper
         self.secret = None
         self.guesses = []
-    
+
     # 이 클래스에서 가장 중요한 메서드는 다음에 보이는 메서드다. 이 메서드는 클라이언트에서 들어오는 메세지를 처리해 명령에 맞는 메서드를 호출해준다.
     # 대입식을 사용해 코드를 짧게 유지한다.
     def loop(self):
@@ -384,7 +371,7 @@ def run_server(address):
 
 # 클라이언트는 주 스레드에서 실행되며 추측 게임의 결과를 호출한 쪽에 돌려준다. 이 코드는 명시적으로 다양한 파이썬 언어 기능(for, with,
 # 제너레이터, 컴프리헨션)을 활용한다.
-def run_clent(address):
+def run_client(address):
     with socket.create_connection(address) as connection:
         client = Client(connection)
 
@@ -412,9 +399,6 @@ def main():
 
 # ======================================================================================================================
 if __name__ == "__main__":
-    for mtd in [
-        main,
-        main_async
-    ]:
-        mtd()
-        print('==================================================================')
+    # Event loop is closed 에러는 window/python 3.8 이상 일때 발생하는 에러. 작동자체는 정상적으로 이뤄짐.
+    main()
+    asyncio.run(main_async())
