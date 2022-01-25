@@ -31,7 +31,7 @@ def use_assignment():
     # 하지만 대입식을 쓰면 이런 유형의 코드를 콕집어서 처리할 수 있다.
 
     # 우선 count 변수에 값을 삽입하고 대입된 값을 바탕으로 if문이 작동한다.
-    # dict.get()는 key에 해당하는 calu를 돌려준다. 이 때, 2번째 인자는 해당 key가 없을 경우 받아올 default이다.
+    # dict.get()는 key에 해당하는 value를 돌려준다. 이 때, 2번째 인자는 해당 key가 없을 경우 받아올 default이다.
     # 즉 레몬 키가 있는 지금은 5를 받아서 count에 대입하고 없다면 0을 받아와서 else 문을 탄다.
     if count := fresh_fruit.get('레몬', 0):
         print('레모네이드를 만든다', count)
